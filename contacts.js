@@ -17,12 +17,13 @@ function listContacts() {
 
 function getContactById(contactId) {
   fs.readFile(contactsPath, (error, data) => {
+    const parsedData = JSON.parse(data);
+    const wantedId = parsedData.filter((el) => el.id === contactId);
+    console.log(wantedId);
+
     if (error) {
       console.log(error);
     }
-    const parsedData = JSON.parse(data);
-    const wantedId = parsedData.find((el) => el.id === contactId);
-    console.log(wantedId);
   });
 }
 
@@ -51,11 +52,9 @@ function addContact(name, email, phone) {
       phone: phone,
     };
     parsedData.push(newContact);
-    console.log(parsedData);
+    console.log(newContact);
   });
 }
-
-listContacts();
 
 module.exports = {
   listContacts,
